@@ -15,46 +15,44 @@ const db = knex({
   }
 });
 
-// db.select('*').from('users').then(data => {
-//   console.log(data);
-// })
-
 const app = express();
 
 app.use(bodyParser.json());
 app.use(cors());
 
-const database = {
-  users: [
-    {
-      id: '123',
-      name: 'John',
-      email: 'john@gmail.com',
-      password: 'cookies',
-      entries: 0,
-      joined: new Date()
-    },
-    {
-      id: '124',
-      name: 'Sally',
-      email: 'sally@gmail.com',
-      password: 'bananas',
-      entries: 0,
-      joined: new Date()
-    },
-  ],
-  login: [
-    {
-      id: '987',
-      hash: '',
-      email: 'john@gmail.com'
-    }
-  ]
-}
+// Test purposes only!!
 
-app.get('/', (req, res) => {
-  res.send(database.users);
-});
+// const database = {
+//   users: [
+//     {
+//       id: '123',
+//       name: 'John',
+//       email: 'john@gmail.com',
+//       password: 'cookies',
+//       entries: 0,
+//       joined: new Date()
+//     },
+//     {
+//       id: '124',
+//       name: 'Sally',
+//       email: 'sally@gmail.com',
+//       password: 'bananas',
+//       entries: 0,
+//       joined: new Date()
+//     },
+//   ],
+//   login: [
+//     {
+//       id: '987',
+//       hash: '',
+//       email: 'john@gmail.com'
+//     }
+//   ]
+// }
+
+// app.get('/', (req, res) => {
+//   res.send(database.users);
+// });  
 
 app.post('/signin', (req, res) => {
   db.select('email', 'hash').from('login')
@@ -130,23 +128,6 @@ app.put('/image', (req, res) => {
   })
   .catch(err => res.status(400).json('unable to get entries'))
 });
-
-// .then(entries => {
-//     // If you are using knex.js version 1.0.0 or higher this now 
-//     // returns an array of objects. Therefore, the code goes from:
-//     // entries[0] --> this used to return the entries
-//     // TO
-//     // entries[0].entries --> this now returns the entries
-//     res.json(entries[0].entries);
-//   })
-
-  // bcrypt.hash(password, null, null, function (err, hash) {
-  //   console.log(hash);
-  // });
-
-// bcrypt.compare("apples", hash, function(err, res) {
-//   console.log(res);
-// });
 
 app.listen(3001, () => {
   console.log('Server listening on port 3001');
