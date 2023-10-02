@@ -3,6 +3,21 @@ const bodyParser = require('body-parser');
 // const bcrypt = require('bcrypt'); convert to newer version later, use deprecated for now
 const bcrypt = require('bcrypt-nodejs');
 const cors = require('cors');
+const knex = require('knex')
+
+const db = knex({
+  client: 'pg',
+  connection : {
+    host : '127.0.0.1',
+    user : 'ryanc',
+    password : '',
+    database : 'facial-recognition'
+  }
+});
+
+db.select('*').from('users').then(data => {
+  console.log(data);
+})
 
 const app = express();
 
@@ -52,15 +67,18 @@ app.post('/signin', (req, res) => {
 
 app.post('/register', (req, res) => {
   const { email, name, password } = req.body;
-
-  database.users.push({
-    id: '125',
-    name: name,
+  db('users')
+  .returning('*')
+  .insert({
     email: email,
-    entries: 0,
+    name: name,
     joined: new Date()
   })
-  res.json(database.users[database.users.length-1]);
+    .then(user => {
+      res.json(user[0]);
+    })
+    .catch(err => res.status(400).json('unable to register'))
+  
 });
 
 app.get('/profile/:id', (req, res) => {
