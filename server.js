@@ -60,6 +60,7 @@ app.use(cors());
 //   res.send(database.users);
 // });  
 
+app.get('/', (req, res) => { res.send('it is working!') });
 app.post('/signin', signIn.handleSignIn(db, bcrypt));
 app.post('/register', register.handleRegister(db, bcrypt));
 app.get('/profile/:id', profile.handleProfileGet(db));
@@ -67,6 +68,8 @@ app.get('/profile/:id', profile.handleProfileGet(db));
 app.put('/image', image.handleImage(db));
 app.post('/imageurl', (req, res) => {image.handleApiCall(req, res)});
 
-app.listen(process.env.PORT || 3001, () => {
-  console.log(`Server listening on port ${process.env.PORT}`);
+const port = process.env.PORT || 3001;
+
+app.listen(port, () => {
+  console.log(`Server listening on port ${port}`);
 });
