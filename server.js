@@ -5,6 +5,8 @@ const bcrypt = require('bcrypt-nodejs');
 const cors = require('cors');
 const knex = require('knex')
 
+require('dotenv').config();
+
 const register = require('./controllers/register');
 const signIn = require('./controllers/signin');
 const profile = require('./controllers/profile');
@@ -63,6 +65,7 @@ app.post('/register', register.handleRegister(db, bcrypt));
 app.get('/profile/:id', profile.handleProfileGet(db));
 // need to clean up and make sep function to improve DRY!!
 app.put('/image', image.handleImage(db));
+app.post('/imageurl', (req, res) => {image.handleApiCall(req, res)});
 
 app.listen(3001, () => {
   console.log('Server listening on port 3001');
