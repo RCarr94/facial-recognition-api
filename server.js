@@ -67,6 +67,6 @@ app.get('/profile/:id', profile.handleProfileGet(db));
 app.put('/image', image.handleImage(db));
 app.post('/imageurl', (req, res) => {image.handleApiCall(req, res)});
 
-app.listen(3001, () => {
-  console.log('Server listening on port 3001');
+app.listen(process.env.PORT || 3001, () => {
+  console.log(`Server listening on port ${process.env.PORT}`);
 });
