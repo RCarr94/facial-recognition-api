@@ -14,12 +14,12 @@ const image = require('./controllers/image');
 
 const db = knex({
   client: 'pg',
-  connection : {
-    host : '127.0.0.1',
-    user : 'ryanc',
-    password : '',
-    database : 'facial-recognition'
-  }
+  connection: {
+    host: 'postgresql-asymmetrical-93039',
+    user: 'ryanc',
+    password: '',
+    database: 'facial-recognition',
+  },
 });
 
 const app = express();
